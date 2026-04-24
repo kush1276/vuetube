@@ -1,112 +1,125 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import CategoryChips from './components/CategoryChips';
 import VideoCard from './components/VideoCard';
-import VideoModal from './components/VideoModal';
 import SettingsModal from './components/SettingsModal';
 import './App.css';
 
-const MOCK_VIDEOS = [
-  {
-    id: 1,
-    title: "The Future of UI Design: Beyond Minimalism and Glassmorphism",
-    channelName: "Design Theory Pro",
-    views: "245K views",
-    timestamp: "2 days ago",
-    duration: "12:45",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuBZW8hjUFD_449Ryj8Fk7ic9AHze1aGF4ETCsqwWPwx32o894Y4OwO6gsjOoiyJARI8oZ4JGozqwIaW-vvbheyoF66Gfcd0IljE_TC1ejZTXYpDW66niUvi7FtZVBTTzZhCNWbpisVrveD_m7SotKZconmTn0ZIIhVPcsnYd5oCdXtNNXX4ITC57twUgojjILcHGwbuKVv6ueetqy5WQZUCtTls5m4ofwWxw-ONOyQZgJIDXEpMHmeULNRqzbxFT3k48DnlDRpOohk",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAnFk3SIy7-SHTSx-hw3wh1vwg69zNbauARiWNXPTOJO2Ox35KjOGjzpl2k3Z67PzKp4M-GmMiMCmjtjBST30D_Df9avPdo3Xosv6ZX5tlne80yMzdMPgTM3BdgJI_6n-TUVAYUgF0ylOCMxsBfshIsE4bNwLJiVMYSjS5fowrjo-kuDE2-1onMqRZhkV1kRMb8OkVlXa3cvdpdwCOWBDpi0eMTJBBNLK8eCcTMmhWDfZSpo6fwQELjSsy19FKnDeVnm9CoexcRXFE"
-  },
-  {
-    id: 2,
-    title: "Building a Production-Ready Video Platform with Vue.js 3",
-    channelName: "CodeWithSarah",
-    views: "1.2M views",
-    timestamp: "1 week ago",
-    duration: "48:12",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuC4zoURQnx3NtLNRZ63_U5Yna2KLlJot2irJ3_s4vMvvmOr9FB9KW3bT9IRUx9Nf19vOxMpeB2C3EgzQ1sBtM1o-1lM9iUdGm-eMJx3y_ulZaBD5_utUGiD2MBwfNA7rTYQFn6hfIB9fU7zSW2Mw2ztnzE6Aq5b7SjHZaks4XreQig_CYDSRFv792yN3iQdUxsEhiIi-3uhnWV4Wp1FpBRcOImNEtENFjO6Iu41GdJp4bxdTicDXiqKuMX1AKDzKFj9YOruLUd1-u0",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbOjTgqizoIdv0ofQs30Z1xH1h9ReXHxVhnlyK3OmcCl6vDs9CM-rK81V0cmI5CZrP9qIl3ii3Gac7xM6a-2FS4A6ETjSzPKOcNxyigsX3ycZzub-hRNBqgmdc9R0lvt0f9ZS6TvQuXIa0joNGt8aNVLUlaN0xnjSYIuSDhclvLBqdlVr4he7sPrwcjCX--6AZ8i1KpPpd6SJW_GkZTJ_7VX9fITANx43K5GHqKOeEsu-7wM3wY6uGuA4OcESgoCXKnBQQ-9OHn1U"
-  },
-  {
-    id: 3,
-    title: "Setup Tour: The Ultimate Minimalist Creator Workspace for 2024",
-    channelName: "TechUnfolded",
-    views: "89K views",
-    timestamp: "5 hours ago",
-    duration: "15:00",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuD5x--wUH74f_ZHdMd5klY62mOGg03JNGswfry0ISANXUhRgkAm0_cxTInWF5z379slPpKMta4ubUVxVeJVnQGdMZ12jymYosafed7R2u0idv9e0keo4GpQO0FIXNXBzmsxH4xvIKTYou-UikPvGvhHlMEP_XLeZi_PElkq0AoIEUvLNIeZJ2KXjV-tvBSpM5sccdELC3Mal0O5AVlFjM1eunWBDmlpEPtFRKqxqDg7YnCapLk00UooFo5Hkn8C7RNkIu4VNlkkry4",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDp_1VwwexSqnak7GygIofEpnP7p-1XXYw4yK08rUuIQLdHuLS3AIfSc8mQKaBVopE7R7ojMBdhRin2acMZryGFPr-DKb47UTUDRNkPW8FN-cnSZqIhL3XeFj071EZR2Q3l2wuFqCa6YnYayeTXc4ZY5LmkkJxrPAKx-QLCltspf_Brcz95rccHsmYnKJjEwxhjhhka1RRDcByzKl7JsdF9tmvBDAoCXujLUNJNriEls86_xINjjmCXrrdi4MsPSOGZCyzuaLGHfvI"
-  },
-  {
-    id: 4,
-    title: "Midnight Sessions: Acoustic Covers Vol. 12",
-    channelName: "Luna Echoes",
-    views: "560K views",
-    timestamp: "3 days ago",
-    duration: "3:24",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlHbVYWa7B9Fg7Lbe_mfzsGSfEkCijopP8W7JpkQtDH9DcnXfE8E8D4RiI81ePGic8xl6hlKDjs4G94C6OxXjFu6ljwOEMaPyJt0RVaYE4C-0yv-qNlhM9fQMR3E_z-0RwaL7UJE9pgVYNwb3JufRDs2KWMCOeQEWqNNPBHZ8CPZUOEvoHagdQyukW80KOqbSDn1TdGzV8T2e4Yuf5ZYaAkL3l6eBqACwftStal1W2x-LRodO2wizqmpMhC39aLz5gOwsSX4UVP_Y",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuA0uq8Q-SLBwTzo-p4Mp5MP00aw0rI3geqPaaKjIWN8lfRxONW48z8UF2vy3nrf6VifoPSTGBtgEtfpvd5DtJFl9W7nHpakCSLJyiB6u9W5tM7NbNmnNIWAQIyqVnKuenfyngpmW6cIBAvkEjGFDssqzW7PMPUXs6ViyuvtAI6afvoskhNJgd0QOT02deQ1Vu2pdCMAbiNh-z9jeLKvplwlEozlke7FCCZGA2SvAJwxugD-adVGiydYDFgn54t2waKXd86Vi8_h9vY"
-  },
-  {
-    id: 5,
-    title: "RTX 5090 Performance Review: The Impossible Benchmark",
-    channelName: "HardwareHype",
-    views: "2.1M views",
-    timestamp: "1 day ago",
-    duration: "22:18",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuAgOW3Jf7xbpOnczLjLkN29ZN5iejbjt1cQNaG1VwN5RFo-gEEZzKf7hCbAtJnv-P9uYc9Vp7J3gmv1aDXNcSx39uKJFcHyw4cpgnLijjsTkqebcGQHUsA6cy3YS_yUB3CzntdD8y6HhcQKmlxMzRzD4nwL4BteSQcMaR-XLpGaREw2hHgGJknINeWhLkZL_gh-48v2VUcwiNCxp7UQgiSF64JI0NeCwGHIH_Vd7jMybqOogC0j8ilq7zYJup_-EtMrJMdLSVsPYCE",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDgmhwhA4y0Pn8CpXqdnWawfFEzNYl9Rd84YpcMD0jxp_BiyUZaZKvFQ2Iyq1jugegK0Dbk0IcOj_zkTRDFojkiSX3QM6L7EfNdzKq3BcgfWxgrSMwTJBq7xNG-MH_WcT8O5y1ZoUxQ0otvQqRLAgA1pGi_0TLsLB39-9J3nAc7_PiJZpiuL0yC5dQdPjwZRus839OIweS2RINR5PeewXZAGL1VDmj649mwOeGz83EUXTkC3sy6NNuTUW6OS0RcmnC4emUEjYAUGNA"
-  },
-  {
-    id: 6,
-    title: "Mastering Landscape Photography: 5 Tips for Golden Hour",
-    channelName: "Visions of Earth",
-    views: "15K views",
-    timestamp: "4 hours ago",
-    duration: "10:05",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuCaWk8xf1B1qypjWZnHxuNkP0TsZV7hKIDD7nXf8xMpOuqnivhsGBqqmVhaWho55rC1sItK0VWKy_WT2-KQxW8FyZBnw9gWMHfGgXCvz3016FyLm_mORUHToN9vxwrLrgh854QhtfRYTjyqOF9wtO5aFwMaH7Pj-PogxDTI1vkmrrN8VpuLkjor-q3pbD6jMzZ_l8W6ZXLmjJe6CHCPV1zUhAkpVMUz57kwui6JD5zbnNRuLUG5QDe32SqJOL05RtQfwzhI0u6OoGI",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuCC7hP7MI4jK-dejpz9UT1P3I_xBt-eDeaA9NtD407Yx7bBksLUlE2NXOfgPP-GdpXdlU6bkPwszRkxU_QOhsJ6oJr_MghigTrlKFVW2HhsJt9cdXJB9ZJliF4AiTgulON9Onx8GfQ2wU6hel5_TsAZzznqW65CujQHYnK0pP6tnGq2utAT12rl2TXy5i773J5WzoRElb7jeshxOIqWNORh7jyd9LW7VEway7WjoMTUxl0iMEOu7WIacCuW6L8v3RAUayTw3CY4T30"
-  },
-  {
-    id: 7,
-    title: "Authentic Italian Carbonara: No Cream Allowed!",
-    channelName: "Chef's Table",
-    views: "875K views",
-    timestamp: "2 weeks ago",
-    duration: "08:30",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuD8LYrcDzyzJ-YZ8XcZdGAV06RwBHRUHdKGKte-NdYbzXbxVJ1cbBiCoC6e14yepYgM21yA4plIb_a6crkRtrjQVUZupIWdr39FoY2CTdmNe6kflhQCB59L5xm7HTvsH3zLg514rje30rIsJbfRGSThjas4P84CJfyqy2TmuWAX3HhvE4qztMz50igVcGWkwlGlCQkvYKEmDYr_Pchl5agcERHuMN1Ib-nuUalmdGZWEbAkkKU-Ki1UV2aQ8CHq1hjTNjpZ7e6g1m4",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuD8LYrcDzyzJ-YZ8XcZdGAV06RwBHRUHdKGKte-NdYbzXbxVJ1cbBiCoC6e14yepYgM21yA4plIb_a6crkRtrjQVUZupIWdr39FoY2CTdmNe6kflhQCB59L5xm7HTvsH3zLg514rje30rIsJbfRGSThjas4P84CJfyqy2TmuWAX3HhvE4qztMz50igVcGWkwlGlCQkvYKEmDYr_Pchl5agcERHuMN1Ib-nuUalmdGZWEbAkkKU-Ki1UV2aQ8CHq1hjTNjpZ7e6g1m4"
-  },
-  {
-    id: 8,
-    title: "Designing My New Brand Identity: Full Process Breakdown",
-    channelName: "Creative Studio",
-    views: "42K views",
-    timestamp: "6 days ago",
-    duration: "31:20",
-    poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuChvXyeSDbpBoYdkH18tPxgZtncCaDBZNPog0ErOzPSJaR44kgVyQ_UCyjwxCvdU903TOCC1j0gqn3B1xRKtT1NXG1dO4n2g9uucSAc-OxW7rZsUTVVNJYHH4uicvwVvdvueIah-UDoYNpCfhUrr5rXU9c92X3tGLolUboLsTZyn0Hjj2W6JXbV0hnpzhFuISKBq5py6LZ6JTUpV0C_4hVZ30YmPDEOPU1Zv-fG7snHc9HS-SLTzoenbSkg_JQqWczfiZmpuL_PwuE",
-    src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
-    channelAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuC6xJMA5nchYaSsypMfVS02BDjIyMXeXMrdtimONmpTGaIydn-qfnv9Awfmms1hyvHa_EwmmIVx_C24UYDud9YYLqI7Y9xzw_ULavUF7in91XFQJWDSkGsDyuLGWEVZwi2vh7GJcX7KCGll3r9rnlUB_WESj5uZY67qgqjm_HCCI7t8Ds5AWk3y0C_5BlpLCzsGkIIyTc3BKHwUNUdll44wWvVBmaVsasQBoZrktLk_TtGruG4kUXH1c4TiZiD1OSsTv-qVbWqQU8U"
-  }
+// ── Verified YouTube video pools ──────────────────────────────────────────
+// Cards with broken thumbnails auto-hide themselves (see VideoCard)
+
+// ⚽ Pinned first card — Ronaldo GOAT video
+const RONALDO_VIDEO = { ytId: 'aO5vC6AcnMU', title: 'Why Cristiano Ronaldo Is The GOAT – Better Than Messi In Every Way', channel: 'The United Stand', views: '3.1M views', timestamp: '1 year ago', duration: '12:47', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZT4FTsFIUXuGgqh3OARFP9qVlpwkMSYe7rX6A=s88' };
+
+const EDU_VIDEOS = [
+  // JavaScript
+  { ytId: 'PkZNo7MFNFg', title: 'Learn JavaScript - Full Course for Beginners', channel: 'freeCodeCamp', views: '12M views', timestamp: '4 years ago', duration: '3:26:42', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQUHMHOeqNq7zzm55UaJFzLNdEFEtnqJNMZ_w=s88' },
+  { ytId: 'hdI2bqOjy3c', title: 'JavaScript Crash Course for Beginners', channel: 'Traversy Media', views: '4.5M views', timestamp: '3 years ago', duration: '1:40:29', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZScVBSCCTPVIkAbujGDH4Gu0cKPi-EIi1Lz0A=s88' },
+  { ytId: 'W6NZfCO5SIk', title: 'JavaScript Tutorial for Beginners', channel: 'Programming with Mosh', views: '9M views', timestamp: '5 years ago', duration: '48:17', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  // React
+  { ytId: 'SqcY0GlETPk', title: 'React Tutorial for Beginners', channel: 'Programming with Mosh', views: '5M views', timestamp: '2 years ago', duration: '1:20:22', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  { ytId: 'w7ejDZ8SWv8', title: 'React JS – Full Course 2022', channel: 'Dave Gray', views: '2.1M views', timestamp: '2 years ago', duration: '9:49:55', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQ3HnHlITJ0Vc-kSaQV1mQGSwJMBFBH3mU-g=s88' },
+  { ytId: 'bMknfKXIFA8', title: "React Course – Beginner's Tutorial for React JavaScript", channel: 'freeCodeCamp', views: '3.8M views', timestamp: '2 years ago', duration: '11:55:27', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQUHMHOeqNq7zzm55UaJFzLNdEFEtnqJNMZ_w=s88' },
+  // Python
+  { ytId: 'rfscVS0vtbw', title: 'Learn Python – Full Course for Beginners', channel: 'freeCodeCamp', views: '42M views', timestamp: '5 years ago', duration: '4:26:51', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQUHMHOeqNq7zzm55UaJFzLNdEFEtnqJNMZ_w=s88' },
+  { ytId: '_uQrJ0TkZlc', title: 'Python Full Course for Beginners', channel: 'Programming with Mosh', views: '30M views', timestamp: '4 years ago', duration: '6:14:07', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  // AI / Machine Learning
+  { ytId: 'aircAruvnKk', title: 'But what is a Neural Network?', channel: '3Blue1Brown', views: '15M views', timestamp: '6 years ago', duration: '19:13', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+  { ytId: 'WUvTyaaNkzM', title: 'The Essence of Calculus', channel: '3Blue1Brown', views: '9M views', timestamp: '6 years ago', duration: '17:04', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+  { ytId: 'bBC-nXj3Ng4', title: 'How does Bitcoin / Blockchain Work?', channel: '3Blue1Brown', views: '8M views', timestamp: '5 years ago', duration: '26:21', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+  // C# for Unity
+  { ytId: 'gB1F9G0JXOo', title: 'MAKE A GAME – Unity Beginner Tutorial', channel: 'Brackeys', views: '8M views', timestamp: '4 years ago', duration: '2:00:03', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZSmP3JbX4PoETl9C3_i5hqPi_aqVbDFY_q93A=s88' },
+  { ytId: 'IlKaB1etrik', title: 'How to make a Video Game in Unity – Beginners', channel: 'Brackeys', views: '12M views', timestamp: '6 years ago', duration: '30:12', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZSmP3JbX4PoETl9C3_i5hqPi_aqVbDFY_q93A=s88' },
+  { ytId: 'j48LtUkZRjU', title: 'C# Tutorial for Beginners – Full Course', channel: 'Programming with Mosh', views: '4M views', timestamp: '5 years ago', duration: '1:00:00', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
 ];
+
+const INFO_VIDEOS = [
+  RONALDO_VIDEO,
+
+  // 🤖 How ChatGPT is Trained (what JARVIS/FRIDAY AI is built on)
+  { ytId: 'VPRSBzXzavo', title: 'How ChatGPT is Trained', channel: 'Ari Seff', views: '1.2M views', timestamp: '2 years ago', duration: '10:07', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTUVa5AjQbPMBrTmDSSRUGGMDLgDQMDtJFe4A=s88' },
+
+  // 🧠 Claude AI / Anthropic
+  { ytId: 'jLM6n4mdRuA', title: 'MCP Tutorial: Build Your First MCP Server', channel: 'AI Jason', views: '890K views', timestamp: '8 months ago', duration: '22:10', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  { ytId: 'm54t8xx13Uk', title: 'Ultimate Claude Guide 2026 (How to use Claude AI for beginners)', channel: 'AI Master', views: '540K views', timestamp: '7 months ago', duration: '34:20', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZScVBSCCTPVIkAbujGDH4Gu0cKPi-EIi1Lz0A=s88' },
+  { ytId: 'WSPChlfxJyA', title: 'Full Claude Tutorial: Beginner to Advanced in 19 Minutes', channel: 'HubSpot', views: '320K views', timestamp: '5 months ago', duration: '19:00', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+  { ytId: 'n1sfrc-RjyM', title: 'OpenClaw Full Tutorial for Beginners – How to Set Up and Use OpenClaw', channel: 'OpenClaw', views: '1.4M views', timestamp: '4 months ago', duration: '7:22', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTUVa5AjQbPMBrTmDSSRUGGMDLgDQMDtJFe4A=s88' },
+
+  // 🔌 MCP / Full-Stack Apps
+  { ytId: '1NgO4Tzv27I', title: 'Build a Full-Stack Web App with Google AI Studio + Supabase (Auth, Database, File Uploads)', channel: 'Fireship', views: '2.1M views', timestamp: '3 months ago', duration: '6:12', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTUVa5AjQbPMBrTmDSSRUGGMDLgDQMDtJFe4A=s88' },
+  { ytId: '6n74FhiwYu4', title: 'Why I Chose Newton School of Technology Over Scaler or Polaris', channel: 'Matt Williams', views: '430K views', timestamp: '2 months ago', duration: '14:55', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQ3HnHlITJ0Vc-kSaQV1mQGSwJMBFBH3mU-g=s88' },
+
+  // ⚙️ AI & Automation
+  { ytId: '1MwSoB0gnM4', title: 'n8n – The ULTIMATE Automation Tool (Better than Zapier!)', channel: 'NetworkChuck', views: '1.9M views', timestamp: '1 year ago', duration: '28:10', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZScVBSCCTPVIkAbujGDH4Gu0cKPi-EIi1Lz0A=s88' },
+  { ytId: 'KcbXKUR7-a0', title: 'How to Use Gamma AI (Full Tutorial for Presentations, Websites & More)', channel: 'Leon van Zyl', views: '560K views', timestamp: '1 year ago', duration: '54:21', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQ3HnHlITJ0Vc-kSaQV1mQGSwJMBFBH3mU-g=s88' },
+  { ytId: 'mvHGl6zEA3w', title: 'The Ultimate AntiGravity Masterclass (3+ HOUR FREE COURSE)', channel: 'Jack AI Automations', views: '780K views', timestamp: '8 months ago', duration: '3:00:00', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRZwMlcGMdJMKwR7wWkFJCmLvMTdqzr9wKfxQ=s88' },
+
+  // 🗃️ Supabase
+  { ytId: 'zBZgdTb-dns', title: 'Supabase in 100 Seconds', channel: 'Fireship', views: '1.8M views', timestamp: '2 years ago', duration: '2:20', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTUVa5AjQbPMBrTmDSSRUGGMDLgDQMDtJFe4A=s88' },
+  { ytId: 'dU7GwCOgvNY', title: 'Supabase Crash Course', channel: 'Traversy Media', views: '740K views', timestamp: '2 years ago', duration: '1:07:39', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZScVBSCCTPVIkAbujGDH4Gu0cKPi-EIi1Lz0A=s88' },
+  { ytId: 'ydz7Dj5QHKY', title: 'Supabase Full Course for Beginners', channel: 'Net Ninja', views: '620K views', timestamp: '2 years ago', duration: '2:15:00', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRZwMlcGMdJMKwR7wWkFJCmLvMTdqzr9wKfxQ=s88' },
+
+  // 🎯 How to Master Skills
+  { ytId: '5MgBikgcWnY', title: 'The First 20 Hours – How to Learn Anything Fast | Josh Kaufman', channel: 'TEDx Talks', views: '34M views', timestamp: '10 years ago', duration: '19:27', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZSmP3JbX4PoETl9C3_i5hqPi_aqVbDFY_q93A=s88' },
+  { ytId: 'O96fE1E-rf8', title: 'How to Learn Anything Faster – Study Tips That Actually Work', channel: 'Thomas Frank', views: '5.2M views', timestamp: '4 years ago', duration: '12:42', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  { ytId: 'ukLnPbIffxE', title: 'How to Learn Skills 10x Faster – The Science of Rapid Learning', channel: 'Mike and Matty', views: '2.8M views', timestamp: '3 years ago', duration: '14:30', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+  { ytId: 'LNHBMFCzznE', title: 'How to Learn Faster with the Feynman Technique', channel: 'Thomas Frank', views: '3.6M views', timestamp: '5 years ago', duration: '8:41', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZTCM3tDpkB2FSnHPFwrPXBPP7R1kYJZs3EHiA=s88' },
+  { ytId: 'IlU-zDU6aQ0', title: 'How to Learn to Code FAST Using AI in 2024', channel: 'NetworkChuck', views: '2.1M views', timestamp: '1 year ago', duration: '21:05', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZScVBSCCTPVIkAbujGDH4Gu0cKPi-EIi1Lz0A=s88' },
+
+  // ⚡ Other useful tech
+  { ytId: 'XRU-CjzYt_o', title: 'Why I Switched From ChatGPT to Claude (without losing anything)', channel: 'Dan Martell', views: '6M views', timestamp: '2 years ago', duration: '22:00', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRZwMlcGMdJMKwR7wWkFJCmLvMTdqzr9wKfxQ=s88' },
+  { ytId: 'ysEN5RaKOlA', title: 'Git and GitHub for Beginners – Crash Course', channel: 'freeCodeCamp', views: '3.8M views', timestamp: '3 years ago', duration: '1:08:29', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZQUHMHOeqNq7zzm55UaJFzLNdEFEtnqJNMZ_w=s88' },
+  { ytId: 'bBC-nXj3Ng4', title: 'How does Bitcoin / Blockchain Work?', channel: '3Blue1Brown', views: '8M views', timestamp: '5 years ago', duration: '26:21', avatar: 'https://yt3.googleusercontent.com/ytc/AIf8zZRx5T4q6GaJ7m_8oXJXU7gLk2cEALgmxcefog=s88' },
+];
+
+
+
+// Home shows Ronaldo first, then all education, then rest of informative
+const HOME_VIDEOS = [RONALDO_VIDEO, ...EDU_VIDEOS, ...INFO_VIDEOS.slice(1)];
+
+
+
+// Map a raw video entry into the shape VideoCard expects
+const mapVideo = (v, index) => ({
+  id: `${v.ytId}-${index}`,
+  title: v.title,
+  channelName: v.channel,
+  views: v.views,
+  timestamp: v.timestamp,
+  duration: v.duration,
+  poster: `https://img.youtube.com/vi/${v.ytId}/hqdefault.jpg`,
+  ytId: v.ytId,
+  channelAvatar: v.avatar,
+});
+
+const PAGE_SIZE = 8;
+
+function getVideoPool(category) {
+  if (category === 'Education') return EDU_VIDEOS;
+  if (category === 'Informative') return INFO_VIDEOS;
+  return HOME_VIDEOS; // Home + everything else shows mixed
+}
+
+// ---------------------------------------------------------------------------
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem('theme') === 'dark' || 
+    localStorage.getItem('theme') === 'dark' ||
     (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
   );
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isDataSaver, setIsDataSaver] = useState(localStorage.getItem('dataSaver') === 'true');
+  const [activeCategory, setActiveCategory] = useState('Home');
 
+  const [videos, setVideos] = useState([]);
+  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef(null);
+
+  // Dark-mode sync
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
@@ -116,6 +129,48 @@ function App() {
       localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);
+
+  // Reset when category changes
+  useEffect(() => {
+    setVideos([]);
+    setPage(0);
+    setHasMore(true);
+  }, [activeCategory]);
+
+  // Load next page
+  const loadMore = useCallback(() => {
+    if (isLoading || !hasMore) return;
+    setIsLoading(true);
+    setTimeout(() => {
+      const pool = getVideoPool(activeCategory);
+      const start = page * PAGE_SIZE;
+      const chunk = pool.slice(start % pool.length);
+      // cycle the pool so scroll is truly infinite
+      const cycled = [];
+      let needed = PAGE_SIZE;
+      let offset = start % pool.length;
+      while (needed > 0) {
+        const take = Math.min(needed, pool.length - offset);
+        cycled.push(...pool.slice(offset, offset + take));
+        needed -= take;
+        offset = 0;
+      }
+      const newItems = cycled.map((v, i) => mapVideo(v, page * PAGE_SIZE + i));
+      setVideos(prev => [...prev, ...newItems]);
+      setPage(p => p + 1);
+      setIsLoading(false);
+    }, 600);
+  }, [isLoading, hasMore, page, activeCategory]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => { if (entries[0].isIntersecting) loadMore(); },
+      { threshold: 0.1 }
+    );
+    if (loaderRef.current) observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [loadMore]);
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const toggleDataSaver = () => {
@@ -130,28 +185,62 @@ function App() {
       <Header />
       <div className="flex pt-14">
         <Sidebar onOpenSettings={() => setIsSettingsOpen(true)} />
-        
+
         <main className="flex-1 ml-0 md:ml-64 p-6 lg:p-8 overflow-x-hidden">
-          <CategoryChips />
-          
+          <CategoryChips
+            activeCategory={activeCategory}
+            onSelectCategory={setActiveCategory}
+          />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 mt-2">
-            {MOCK_VIDEOS.map(video => (
-              <VideoCard 
-                key={video.id} 
-                video={video} 
+            {videos.map(video => (
+              <VideoCard
+                key={video.id}
+                video={video}
                 onSelect={setSelectedVideo}
               />
             ))}
           </div>
+
+          {/* Sentinel for IntersectionObserver */}
+          <div ref={loaderRef} className="flex justify-center items-center py-8 w-full">
+            {isLoading && (
+              <div className="w-8 h-8 border-4 border-slate-200 dark:border-slate-800 border-t-red-500 rounded-full animate-spin" />
+            )}
+          </div>
         </main>
       </div>
 
-      <VideoModal 
-        video={selectedVideo} 
-        onClose={() => setSelectedVideo(null)} 
-      />
+      {/* YouTube embed modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center backdrop-blur-sm"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div className="absolute top-4 right-4 z-[110]">
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all active:scale-95 duration-200"
+            >
+              <span className="material-symbols-outlined text-3xl">close</span>
+            </button>
+          </div>
+          <div
+            className="w-full max-w-6xl w-[90vw] aspect-video relative rounded-2xl overflow-hidden shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <iframe
+              className="w-full h-full"
+              src={`https://www.youtube.com/embed/${selectedVideo.ytId}?autoplay=1&rel=0`}
+              title={selectedVideo.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
 
-      <SettingsModal 
+      <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         isDarkMode={isDarkMode}
