@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#b4c8e2",
+                        "primary-container": "#42b883",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#3d4a42",
+                        "secondary": "#4c6076",
+                        "tertiary": "#505f76",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "primary-fixed": "#86f9be",
+                        "on-secondary-fixed-variant": "#34485d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#005234",
+                        "surface-tint": "#006c47",
+                        "tertiary-container": "#95a5be",
+                        "on-primary-container": "#00432a",
+                        "on-secondary-container": "#52667c",
+                        "on-secondary-fixed": "#061d30",
+                        "primary-fixed-dim": "#69dca4",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "inverse-primary": "#69dca4",
+                        "inverse-surface": "#2f3131",
+                        "on-background": "#1a1c1c",
+                        "outline-variant": "#bdcabf",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#2b3b50",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary-fixed": "#002112",
+                        "tertiary-fixed": "#d3e4fe",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "secondary-container": "#cfe5ff",
+                        "surface-container": "#eeeeee",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "primary": "#006c47",
+                        "outline": "#6d7a71",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "max_content_width": "1600px",
+                        "sidebar_width": "260px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "xl": "48px",
+                        "lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "title-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "title-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-background">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full h-14 z-50 bg-white border-b border-slate-100 flex items-center justify-between px-4 w-full">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 rounded-full transition-all active:scale-95 duration-200 lg:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-xl font-black tracking-tighter text-slate-900">VueTube</div>
+</div>
+<div class="hidden md:flex flex-1 max-w-2xl px-8">
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</div>
+<input class="w-full h-10 pl-12 pr-4 bg-slate-100 border-transparent rounded-full focus:bg-white focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all font-body-md text-sm" placeholder="Search creators, videos, or topics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-slate-100 rounded-full transition-all active:scale-95 duration-200 text-slate-600">
+<span class="material-symbols-outlined" data-icon="video_call">video_call</span>
+</button>
+<button class="p-2 hover:bg-slate-100 rounded-full transition-all active:scale-95 duration-200 text-slate-600">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full overflow-hidden bg-slate-200 border border-slate-100 cursor-pointer active:scale-95 transition-transform">
+<img alt="User avatar" data-alt="close-up portrait of a professional male designer with short hair and friendly expression in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUVlw4eoquJfGKUKHa6r9_ZzRDbsTvUCoHdQXxGv1N-FSewhbo3CxSmSnYmppIZEzNwaHMpUheP4ffl2LH9twTCMwrSEKWQ6Zg39EJqD1bzggokNIAet_90MrVdYL0d-b3c7jsNds4fljqyh8PgV2rUbKsFnmxe66GV23skiJm-lI45AvWA_lMzAnEZdQS-Pcfa6r-fQqEoswFJa6uDokHfXJ09trgPgos50FTPo0EnFXtabo3lvXWXNr7HS0yNYJ1wCjI1SYONrg"/>
+</div>
+</div>
+</header>
+<div class="flex pt-14">
+<!-- Side Navigation Shell -->
+<nav class="fixed left-0 top-0 h-full w-64 hidden md:block bg-white border-r border-slate-100 flex flex-col pt-14 z-40">
+<div class="flex-1 overflow-y-auto py-4">
+<a class="flex items-center gap-4 px-6 py-3 bg-emerald-50 text-emerald-600 font-semibold border-r-4 border-emerald-500 transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm">Home</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="font-label-sm">Trending</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+<span class="font-label-sm">Subscriptions</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer active:translate-x-1 border-b border-slate-50 mb-4 pb-4" href="#">
+<span class="material-symbols-outlined" data-icon="video_library">video_library</span>
+<span class="font-label-sm">Library</span>
+</a>
+<div class="px-6 py-2">
+<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Creator Dashboard</h3>
+<a class="flex items-center gap-4 py-2 text-slate-600 hover:text-emerald-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+<span class="font-label-sm">History</span>
+</a>
+<a class="flex items-center gap-4 py-2 text-slate-600 hover:text-emerald-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="smart_display">smart_display</span>
+<span class="font-label-sm">Your Videos</span>
+</a>
+<a class="flex items-center gap-4 py-2 text-slate-600 hover:text-emerald-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-label-sm">Watch Later</span>
+</a>
+</div>
+</div>
+<div class="p-4 border-t border-slate-50">
+<a class="flex items-center gap-4 px-2 py-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-2 py-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-sm">Help</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 p-6 lg:p-8 bg-surface min-h-screen">
+<!-- Category Chips -->
+<div class="flex gap-3 overflow-x-auto pb-6 scrollbar-hide no-scrollbar">
+<button class="px-4 py-1.5 bg-slate-900 text-white rounded-full text-sm font-medium whitespace-nowrap">All</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Design Systems</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Gaming</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Music</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Live</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Programming</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Photography</button>
+<button class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-full text-sm font-medium whitespace-nowrap transition-colors">Productivity</button>
+</div>
+<!-- Video Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-md gap-y-lg">
+<!-- Video Card 1 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="UI Design" class="w-full h-full object-cover" data-alt="abstract digital artwork with vibrant green and blue geometric waves and fluid textures, minimalist high-end tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZW8hjUFD_449Ryj8Fk7ic9AHze1aGF4ETCsqwWPwx32o894Y4OwO6gsjOoiyJARI8oZ4JGozqwIaW-vvbheyoF66Gfcd0IljE_TC1ejZTXYpDW66niUvi7FtZVBTTzZhCNWbpisVrveD_m7SotKZconmTn0ZIIhVPcsnYd5oCdXtNNXX4ITC57twUgojjILcHGwbuKVv6ueetqy5WQZUCtTls5m4ofwWxw-ONOyQZgJIDXEpMHmeULNRqzbxFT3k48DnlDRpOohk"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">12:45</div>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="portrait of a young creative professional man in a minimal studio setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnFk3SIy7-SHTSx-hw3wh1vwg69zNbauARiWNXPTOJO2Ox35KjOGjzpl2k3Z67PzKp4M-GmMiMCmjtjBST30D_Df9avPdo3Xosv6ZX5tlne80yMzdMPgTM3BdgJI_6n-TUVAYUgF0ylOCMxsBfshIsE4bNwLJiVMYSjS5fowrjo-kuDE2-1onMqRZhkV1kRMb8OkVlXa3cvdpdwCOWBDpi0eMTJBBNLK8eCcTMmhWDfZSpo6fwQELjSsy19FKnDeVnm9CoexcRXFE"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">The Future of UI Design: Beyond Minimalism and Glassmorphism</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">Design Theory Pro</div>
+<div class="text-slate-400 text-xs">245K views • 2 days ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 2 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Coding" class="w-full h-full object-cover" data-alt="close-up of a laptop screen displaying elegant lines of code in a dark mode editor with ambient desk lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4zoURQnx3NtLNRZ63_U5Yna2KLlJot2irJ3_s4vMvvmOr9FB9KW3bT9IRUx9Nf19vOxMpeB2C3EgzQ1sBtM1o-1lM9iUdGm-eMJx3y_ulZaBD5_utUGiD2MBwfNA7rTYQFn6hfIB9fU7zSW2Mw2ztnzE6Aq5b7SjHZaks4XreQig_CYDSRFv792yN3iQdUxsEhiIi-3uhnWV4Wp1FpBRcOImNEtENFjO6Iu41GdJp4bxdTicDXiqKuMX1AKDzKFj9YOruLUd1-u0"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">48:12</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="professional woman in tech smiling, soft office background, high-key lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbOjTgqizoIdv0ofQs30Z1xH1h9ReXHxVhnlyK3OmcCl6vDs9CM-rK81V0cmI5CZrP9qIl3ii3Gac7xM6a-2FS4A6ETjSzPKOcNxyigsX3ycZzub-hRNBqgmdc9R0lvt0f9ZS6TvQuXIa0joNGt8aNVLUlaN0xnjSYIuSDhclvLBqdlVr4he7sPrwcjCX--6AZ8i1KpPpd6SJW_GkZTJ_7VX9fITANx43K5GHqKOeEsu-7wM3wY6uGuA4OcESgoCXKnBQQ-9OHn1U"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Building a Production-Ready Video Platform with Vue.js 3</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">CodeWithSarah</div>
+<div class="text-slate-400 text-xs">1.2M views • 1 week ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 3 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Tech" class="w-full h-full object-cover" data-alt="overhead shot of a clean, minimalist wooden desk with modern gadgets, mechanical keyboard, and a smartphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5x--wUH74f_ZHdMd5klY62mOGg03JNGswfry0ISANXUhRgkAm0_cxTInWF5z379slPpKMta4ubUVxVeJVnQGdMZ12jymYosafed7R2u0idv9e0keo4GpQO0FIXNXBzmsxH4xvIKTYou-UikPvGvhHlMEP_XLeZi_PElkq0AoIEUvLNIeZJ2KXjV-tvBSpM5sccdELC3Mal0O5AVlFjM1eunWBDmlpEPtFRKqxqDg7YnCapLk00UooFo5Hkn8C7RNkIu4VNlkkry4"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">15:00</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="clean headshot of a tech reviewer against a plain grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp_1VwwexSqnak7GygIofEpnP7p-1XXYw4yK08rUuIQLdHuLS3AIfSc8mQKaBVopE7R7ojMBdhRin2acMZryGFPr-DKb47UTUDRNkPW8FN-cnSZqIhL3XeFj071EZR2Q3l2wuFqCa6YnYayeTXc4ZY5LmkkJxrPAKx-QLCltspf_Brcz95rccHsmYnKJjEwxhjhhka1RRDcByzKl7JsdF9tmvBDAoCXujLUNJNriEls86_xINjjmCXrrdi4MsPSOGZCyzuaLGHfvI"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Setup Tour: The Ultimate Minimalist Creator Workspace for 2024</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">TechUnfolded</div>
+<div class="text-slate-400 text-xs">89K views • 5 hours ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 4 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Music" class="w-full h-full object-cover" data-alt="professional condenser microphone in a dark music studio with soft purple and blue ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlHbVYWa7B9Fg7Lbe_mfzsGSfEkCijopP8W7JpkQtDH9DcnXfE8E8D4RiI81ePGic8xl6hlKDjs4G94C6OxXjFu6ljwOEMaPyJt0RVaYE4C-0yv-qNlhM9fQMR3E_z-0RwaL7UJE9pgVYNwb3JufRDs2KWMCOeQEWqNNPBHZ8CPZUOEvoHagdQyukW80KOqbSDn1TdGzV8T2e4Yuf5ZYaAkL3l6eBqACwftStal1W2x-LRodO2wizqmpMhC39aLz5gOwsSX4UVP_Y"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">3:24</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="expressive portrait of a young female musician in a casual setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0uq8Q-SLBwTzo-p4Mp5MP00aw0rI3geqPaaKjIWN8lfRxONW48z8UF2vy3nrf6VifoPSTGBtgEtfpvd5DtJFl9W7nHpakCSLJyiB6u9W5tM7NbNmnNIWAQIyqVnKuenfyngpmW6cIBAvkEjGFDssqzW7PMPUXs6ViyuvtAI6afvoskhNJgd0QOT02deQ1Vu2pdCMAbiNh-z9jeLKvplwlEozlke7FCCZGA2SvAJwxugD-adVGiydYDFgn54t2waKXd86Vi8_h9vY"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Midnight Sessions: Acoustic Covers Vol. 12</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">Luna Echoes</div>
+<div class="text-slate-400 text-xs">560K views • 3 days ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 5 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Gaming" class="w-full h-full object-cover" data-alt="cinematic shot of a high-performance gaming PC with vibrant RGB lighting in a dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgOW3Jf7xbpOnczLjLkN29ZN5iejbjt1cQNaG1VwN5RFo-gEEZzKf7hCbAtJnv-P9uYc9Vp7J3gmv1aDXNcSx39uKJFcHyw4cpgnLijjsTkqebcGQHUsA6cy3YS_yUB3CzntdD8y6HhcQKmlxMzRzD4nwL4BteSQcMaR-XLpGaREw2hHgGJknINeWhLkZL_gh-48v2VUcwiNCxp7UQgiSF64JI0NeCwGHIH_Vd7jMybqOogC0j8ilq7zYJup_-EtMrJMdLSVsPYCE"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">22:18</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="portrait of a cheerful man in casual attire, high quality lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgmhwhA4y0Pn8CpXqdnWawfFEzNYl9Rd84YpcMD0jxp_BiyUZaZKvFQ2Iyq1jugegK0Dbk0IcOj_zkTRDFojkiSX3QM6L7EfNdzKq3BcgfWxgrSMwTJBq7xNG-MH_WcT8O5y1ZoUxQ0otvQqRLAgA1pGi_0TLsLB39-9J3nAc7_PiJZpiuL0yC5dQdPjwZRus839OIweS2RINR5PeewXZAGL1VDmj649mwOeGz83EUXTkC3sy6NNuTUW6OS0RcmnC4emUEjYAUGNA"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">RTX 5090 Performance Review: The Impossible Benchmark</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">HardwareHype</div>
+<div class="text-slate-400 text-xs">2.1M views • 1 day ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 6 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Photography" class="w-full h-full object-cover" data-alt="stunning landscape of a mist-covered mountain range at sunrise with soft pastel colors in the sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaWk8xf1B1qypjWZnHxuNkP0TsZV7hKIDD7nXf8xMpOuqnivhsGBqqmVhaWho55rC1sItK0VWKy_WT2-KQxW8FyZBnw9gWMHfGgXCvz3016FyLm_mORUHToN9vxwrLrgh854QhtfRYTjyqOF9wtO5aFwMaH7Pj-PogxDTI1vkmrrN8VpuLkjor-q3pbD6jMzZ_l8W6ZXLmjJe6CHCPV1zUhAkpVMUz57kwui6JD5zbnNRuLUG5QDe32SqJOL05RtQfwzhI0u6OoGI"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">10:05</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="portrait of a bearded man with a camera, outdoor natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC7hP7MI4jK-dejpz9UT1P3I_xBt-eDeaA9NtD407Yx7bBksLUlE2NXOfgPP-GdpXdlU6bkPwszRkxU_QOhsJ6oJr_MghigTrlKFVW2HhsJt9cdXJB9ZJliF4AiTgulON9Onx8GfQ2wU6hel5_TsAZzznqW65CujQHYnK0pP6tnGq2utAT12rl2TXy5i773J5WzoRElb7jeshxOIqWNORh7jyd9LW7VEway7WjoMTUxl0iMEOu7WIacCuW6L8v3RAUayTw3CY4T30"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Mastering Landscape Photography: 5 Tips for Golden Hour</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">Visions of Earth</div>
+<div class="text-slate-400 text-xs">15K views • 4 hours ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 7 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Cooking" class="w-full h-full object-cover" data-alt="artistic close-up of a perfectly plated gourmet pasta dish with fresh herbs and steam rising" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrhKtAM26zSW1OJd6Z5GXpwKSv8gYPVf-XFaUc1dZz6UZ70_3CEDz4nSZ1kZHZSwMb0tKNkEjxF8Fg1uBGwz10z75Afcbe2p96jPnWAn2HW4eFgePqzIEqPMjl_rsjYvl747zECFYQ_OJL58wOEEAeb8ztgmA4OhZH7ZPxUsVgecLOIJGtk2gy5f7T3TU4IwkL1ifKhaq5_qXwVI59D3zRiwt4-AWAKMGQO56EpXUwsIBMZ_Y3C925hVibMfrloAlpNsdn9bc9kM"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">08:30</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="chef in a white uniform smiling in a bright kitchen background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8LYrcDzyzJ-YZ8XcZdGAV06RwBHRUHdKGKte-NdYbzXbxVJ1cbBiCoC6e14yepYgM21yA4plIb_a6crkRtrjQVUZupIWdr39FoY2CTdmNe6kflhQCB59L5xm7HTvsH3zLg514rje30rIsJbfRGSThjas4P84CJfyqy2TmuWAX3HhvE4qztMz50igVcGWkwlGlCQkvYKEmDYr_Pchl5agcERHuMN1Ib-nuUalmdGZWEbAkkKU-Ki1UV2aQ8CHq1hjTNjpZ7e6g1m4"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Authentic Italian Carbonara: No Cream Allowed!</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">Chef's Table</div>
+<div class="text-slate-400 text-xs">875K views • 2 weeks ago</div>
+</div>
+</div>
+</article>
+<!-- Video Card 8 -->
+<article class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+<img alt="Workspace" class="w-full h-full object-cover" data-alt="close-up of a laptop screen with creative software open, surrounded by design tools and a coffee cup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChvXyeSDbpBoYdkH18tPxgZtncCaDBZNPog0ErOzPSJaR44kgVyQ_UCyjwxCvdU903TOCC1j0gqn3B1xRKtT1NXG1dO4n2g9uucSAc-OxW7rZsUTVVNJYHH4uicvwVvdvueIah-UDoYNpCfhUrr5rXU9c92X3tGLolUboLsTZyn0Hjj2W6JXbV0hnpzhFuISKBq5py6LZ6JTUpV0C_4hVZ30YmPDEOPU1Zv-fG7snHc9HS-SLTzoenbSkg_JQqWczfiZmpuL_PwuE"/>
+<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">31:20</div>
+</div>
+<div class="flex gap-3">
+<div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
+<img alt="Channel Avatar" data-alt="friendly woman with glasses in a minimalist workspace background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6xJMA5nchYaSsypMfVS02BDjIyMXeXMrdtimONmpTGaIydn-qfnv9Awfmms1hyvHa_EwmmIVx_C24UYDud9YYLqI7Y9xzw_ULavUF7in91XFQJWDSkGsDyuLGWEVZwi2vh7GJcX7KCGll3r9rnlUB_WESj5uZY67qgqjm_HCCI7t8Ds5AWk3y0C_5BlpLCzsGkIIyTc3BKHwUNUdll44wWvVBmaVsasQBoZrktLk_TtGruG4kUXH1c4TiZiD1OSsTv-qVbWqQU8U"/>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-title-sm text-sm line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">Designing My New Brand Identity: Full Process Breakdown</h3>
+<div class="text-slate-500 text-xs font-medium mb-0.5">Creative Studio</div>
+<div class="text-slate-400 text-xs">42K views • 6 days ago</div>
+</div>
+</div>
+</article>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="fixed bottom-0 w-full md:hidden z-50 bg-white border-t border-slate-100 shadow-lg flex justify-around items-center h-16 pb-safe">
+<a class="flex flex-col items-center justify-center text-emerald-500 tap-highlight-transparent active:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-medium font-['Inter']">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 tap-highlight-transparent active:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="play_circle">play_circle</span>
+<span class="text-[10px] font-medium font-['Inter']">Shorts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 tap-highlight-transparent active:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+<span class="text-[10px] font-medium font-['Inter']">Subs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 tap-highlight-transparent active:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="video_library">video_library</span>
+<span class="text-[10px] font-medium font-['Inter']">Library</span>
+</a>
+</nav>
+</body></html>
