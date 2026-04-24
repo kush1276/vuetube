@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Header = () => {
+const Header = ({ userName, onSearch }) => {
+  const [showName, setShowName] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      onSearch(searchTerm);
+    }
+  };
+
   return (
     <header className="fixed top-0 w-full h-14 z-50 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-4 transition-colors duration-300">
       <div className="flex items-center gap-4">
@@ -12,25 +21,39 @@ const Header = () => {
 
       <div className="hidden md:flex flex-1 max-w-2xl px-12">
         <div className="relative w-full group">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400">
+          <div 
+            className="absolute inset-y-0 left-4 flex items-center cursor-pointer text-slate-400 hover:text-emerald-500 transition-colors"
+            onClick={() => onSearch(searchTerm)}
+          >
             <span className="material-symbols-outlined text-xl">search</span>
           </div>
           <input 
             className="w-full h-10 pl-12 pr-4 bg-slate-100 dark:bg-slate-800 border-transparent dark:border-slate-700 rounded-full focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-body-md text-sm dark:text-white outline-none" 
             placeholder="Search creators, videos, or topics..." 
             type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleSearch}
           />
         </div>
       </div>
 
       <div className="flex items-center gap-1 sm:gap-2">
+        {showName && (
+          <div className="hidden sm:block px-3 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-100 dark:border-emerald-800 animate-in fade-in slide-in-from-right-2 duration-300">
+            {userName || 'Newton User'}
+          </div>
+        )}
         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all active:scale-95 duration-200 text-slate-600 dark:text-slate-400">
           <span className="material-symbols-outlined">video_call</span>
         </button>
         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all active:scale-95 duration-200 text-slate-600 dark:text-slate-400">
           <span className="material-symbols-outlined">notifications</span>
         </button>
-        <div className="ml-2 w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 border border-slate-100 dark:border-slate-800 cursor-pointer active:scale-95 transition-transform">
+        <div 
+          onClick={() => setShowName(!showName)}
+          className="ml-2 w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 border border-slate-100 dark:border-slate-800 cursor-pointer active:scale-95 transition-transform"
+        >
           <img 
             alt="User avatar" 
             className="w-full h-full object-cover"

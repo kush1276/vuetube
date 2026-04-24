@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Sidebar = ({ onOpenSettings }) => {
+const Sidebar = ({ onOpenSettings, onOpenHelp }) => {
   return (
     <nav className="fixed left-0 top-0 h-full w-64 hidden md:block bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 flex flex-col pt-14 z-40 transition-colors duration-300">
       <div className="flex-1 overflow-y-auto py-4">
@@ -51,10 +51,13 @@ const Sidebar = ({ onOpenSettings }) => {
           <span className="material-symbols-outlined">settings</span>
           <span className="text-sm font-medium">Settings</span>
         </button>
-        <a className="flex items-center gap-4 px-2 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+        <button 
+          onClick={onOpenHelp}
+          className="w-full flex items-center gap-4 px-2 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+        >
           <span className="material-symbols-outlined">help</span>
           <span className="text-sm font-medium">Help</span>
-        </a>
+        </button>
       </div>
     </nav>
   );

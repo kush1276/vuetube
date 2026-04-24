@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import CategoryChips from './components/CategoryChips';
 import VideoCard from './components/VideoCard';
 import SettingsModal from './components/SettingsModal';
+import HelpModal from './components/HelpModal';
 import './App.css';
 
 // ── Verified YouTube video pools ──────────────────────────────────────────
@@ -129,6 +130,8 @@ function App() {
     (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
   );
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isDataSaver, setIsDataSaver] = useState(localStorage.getItem('dataSaver') === 'true');
   const [activeCategory, setActiveCategory] = useState('Home');
@@ -136,8 +139,12 @@ function App() {
   const [videos, setVideos] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
+
+  // YouTube API Key (Accessed via environment variable for security)
+  const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY; 
 
   // Dark-mode sync
   useEffect(() => {
@@ -198,6 +205,55 @@ function App() {
   }, [loadMore]);
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      setActiveCategory('Home');
+      setIsSearching(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setIsSearching(true);
+    setVideos([]);
+    setPage(0);
+    setHasMore(false); // Disable infinite scroll during YouTube search results for now
+
+    try {
+      if (!YOUTUBE_API_KEY) {
+        throw new Error('No API Key');
+      }
+
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&order=date&type=video&q=${encodeURIComponent(query)}&key=${YOUTUBE_API_KEY}`
+      );
+      
+      if (!response.ok) throw new Error('API request failed');
+      
+      const data = await response.json();
+      
+      const mappedVideos = data.items.map((item, index) => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        channelName: item.snippet.channelTitle,
+        views: 'Loading...', // Search API doesn't provide views directly
+        timestamp: new Date(item.snippet.publishedAt).toLocaleDateString(),
+        duration: 'Live', // Duration also needs another API call
+        poster: item.snippet.thumbnails.high.url,
+        ytId: item.id.videoId,
+        channelAvatar: `https://img.youtube.com/vi/${item.id.videoId}/hqdefault.jpg`,
+      }));
+
+      setVideos(mappedVideos);
+    } catch (error) {
+      console.warn('YouTube Search failed, falling back to local search:', error);
+      // Fallback: Local search if API fails
+      setActiveCategory(query);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const toggleDataSaver = () => {
     const newState = !isDataSaver;
     setIsDataSaver(newState);
@@ -207,9 +263,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300 font-body-md text-slate-900 dark:text-slate-100">
-      <Header />
+      <Header userName={userName} onSearch={handleSearch} />
       <div className="flex pt-14">
-        <Sidebar onOpenSettings={() => setIsSettingsOpen(true)} />
+        <Sidebar 
+          onOpenSettings={() => setIsSettingsOpen(true)} 
+          onOpenHelp={() => setIsHelpOpen(true)}
+        />
 
         <main className="flex-1 ml-0 md:ml-64 p-6 lg:p-8 overflow-x-hidden">
           <CategoryChips
@@ -272,6 +331,13 @@ function App() {
         toggleDarkMode={toggleDarkMode}
         isDataSaver={isDataSaver}
         toggleDataSaver={toggleDataSaver}
+        userName={userName}
+        setUserName={setUserName}
+      />
+
+      <HelpModal 
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
       />
     </div>
   );

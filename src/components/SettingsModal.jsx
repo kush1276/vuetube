@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SettingsModal = ({ isOpen, onClose, isDarkMode, toggleDarkMode, isDataSaver, toggleDataSaver }) => {
-  const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+const SettingsModal = ({ isOpen, onClose, isDarkMode, toggleDarkMode, isDataSaver, toggleDataSaver, userName, setUserName }) => {
   const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail') || '');
 
   const handleSubmit = (e) => {
