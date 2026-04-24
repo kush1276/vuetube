@@ -196,11 +196,13 @@
 <!-- Video Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-md gap-y-lg">
 <!-- Video Card 1 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="UI Design" class="w-full h-full object-cover" data-alt="abstract digital artwork with vibrant green and blue geometric waves and fluid textures, minimalist high-end tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZW8hjUFD_449Ryj8Fk7ic9AHze1aGF4ETCsqwWPwx32o894Y4OwO6gsjOoiyJARI8oZ4JGozqwIaW-vvbheyoF66Gfcd0IljE_TC1ejZTXYpDW66niUvi7FtZVBTTzZhCNWbpisVrveD_m7SotKZconmTn0ZIIhVPcsnYd5oCdXtNNXX4ITC57twUgojjILcHGwbuKVv6ueetqy5WQZUCtTls5m4ofwWxw-ONOyQZgJIDXEpMHmeULNRqzbxFT3k48DnlDRpOohk"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">12:45</div>
-<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuBZW8hjUFD_449Ryj8Fk7ic9AHze1aGF4ETCsqwWPwx32o894Y4OwO6gsjOoiyJARI8oZ4JGozqwIaW-vvbheyoF66Gfcd0IljE_TC1ejZTXYpDW66niUvi7FtZVBTTzZhCNWbpisVrveD_m7SotKZconmTn0ZIIhVPcsnYd5oCdXtNNXX4ITC57twUgojjILcHGwbuKVv6ueetqy5WQZUCtTls5m4ofwWxw-ONOyQZgJIDXEpMHmeULNRqzbxFT3k48DnlDRpOohk">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">12:45</div>
+<div class="absolute inset-0 z-10 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -214,10 +216,12 @@
 </div>
 </article>
 <!-- Video Card 2 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Coding" class="w-full h-full object-cover" data-alt="close-up of a laptop screen displaying elegant lines of code in a dark mode editor with ambient desk lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4zoURQnx3NtLNRZ63_U5Yna2KLlJot2irJ3_s4vMvvmOr9FB9KW3bT9IRUx9Nf19vOxMpeB2C3EgzQ1sBtM1o-1lM9iUdGm-eMJx3y_ulZaBD5_utUGiD2MBwfNA7rTYQFn6hfIB9fU7zSW2Mw2ztnzE6Aq5b7SjHZaks4XreQig_CYDSRFv792yN3iQdUxsEhiIi-3uhnWV4Wp1FpBRcOImNEtENFjO6Iu41GdJp4bxdTicDXiqKuMX1AKDzKFj9YOruLUd1-u0"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">48:12</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuC4zoURQnx3NtLNRZ63_U5Yna2KLlJot2irJ3_s4vMvvmOr9FB9KW3bT9IRUx9Nf19vOxMpeB2C3EgzQ1sBtM1o-1lM9iUdGm-eMJx3y_ulZaBD5_utUGiD2MBwfNA7rTYQFn6hfIB9fU7zSW2Mw2ztnzE6Aq5b7SjHZaks4XreQig_CYDSRFv792yN3iQdUxsEhiIi-3uhnWV4Wp1FpBRcOImNEtENFjO6Iu41GdJp4bxdTicDXiqKuMX1AKDzKFj9YOruLUd1-u0">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">48:12</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -231,10 +235,12 @@
 </div>
 </article>
 <!-- Video Card 3 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Tech" class="w-full h-full object-cover" data-alt="overhead shot of a clean, minimalist wooden desk with modern gadgets, mechanical keyboard, and a smartphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5x--wUH74f_ZHdMd5klY62mOGg03JNGswfry0ISANXUhRgkAm0_cxTInWF5z379slPpKMta4ubUVxVeJVnQGdMZ12jymYosafed7R2u0idv9e0keo4GpQO0FIXNXBzmsxH4xvIKTYou-UikPvGvhHlMEP_XLeZi_PElkq0AoIEUvLNIeZJ2KXjV-tvBSpM5sccdELC3Mal0O5AVlFjM1eunWBDmlpEPtFRKqxqDg7YnCapLk00UooFo5Hkn8C7RNkIu4VNlkkry4"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">15:00</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuD5x--wUH74f_ZHdMd5klY62mOGg03JNGswfry0ISANXUhRgkAm0_cxTInWF5z379slPpKMta4ubUVxVeJVnQGdMZ12jymYosafed7R2u0idv9e0keo4GpQO0FIXNXBzmsxH4xvIKTYou-UikPvGvhHlMEP_XLeZi_PElkq0AoIEUvLNIeZJ2KXjV-tvBSpM5sccdELC3Mal0O5AVlFjM1eunWBDmlpEPtFRKqxqDg7YnCapLk00UooFo5Hkn8C7RNkIu4VNlkkry4">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">15:00</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -248,10 +254,12 @@
 </div>
 </article>
 <!-- Video Card 4 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Music" class="w-full h-full object-cover" data-alt="professional condenser microphone in a dark music studio with soft purple and blue ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlHbVYWa7B9Fg7Lbe_mfzsGSfEkCijopP8W7JpkQtDH9DcnXfE8E8D4RiI81ePGic8xl6hlKDjs4G94C6OxXjFu6ljwOEMaPyJt0RVaYE4C-0yv-qNlhM9fQMR3E_z-0RwaL7UJE9pgVYNwb3JufRDs2KWMCOeQEWqNNPBHZ8CPZUOEvoHagdQyukW80KOqbSDn1TdGzV8T2e4Yuf5ZYaAkL3l6eBqACwftStal1W2x-LRodO2wizqmpMhC39aLz5gOwsSX4UVP_Y"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">3:24</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuAlHbVYWa7B9Fg7Lbe_mfzsGSfEkCijopP8W7JpkQtDH9DcnXfE8E8D4RiI81ePGic8xl6hlKDjs4G94C6OxXjFu6ljwOEMaPyJt0RVaYE4C-0yv-qNlhM9fQMR3E_z-0RwaL7UJE9pgVYNwb3JufRDs2KWMCOeQEWqNNPBHZ8CPZUOEvoHagdQyukW80KOqbSDn1TdGzV8T2e4Yuf5ZYaAkL3l6eBqACwftStal1W2x-LRodO2wizqmpMhC39aLz5gOwsSX4UVP_Y">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">3:24</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -265,10 +273,12 @@
 </div>
 </article>
 <!-- Video Card 5 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Gaming" class="w-full h-full object-cover" data-alt="cinematic shot of a high-performance gaming PC with vibrant RGB lighting in a dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgOW3Jf7xbpOnczLjLkN29ZN5iejbjt1cQNaG1VwN5RFo-gEEZzKf7hCbAtJnv-P9uYc9Vp7J3gmv1aDXNcSx39uKJFcHyw4cpgnLijjsTkqebcGQHUsA6cy3YS_yUB3CzntdD8y6HhcQKmlxMzRzD4nwL4BteSQcMaR-XLpGaREw2hHgGJknINeWhLkZL_gh-48v2VUcwiNCxp7UQgiSF64JI0NeCwGHIH_Vd7jMybqOogC0j8ilq7zYJup_-EtMrJMdLSVsPYCE"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">22:18</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuAgOW3Jf7xbpOnczLjLkN29ZN5iejbjt1cQNaG1VwN5RFo-gEEZzKf7hCbAtJnv-P9uYc9Vp7J3gmv1aDXNcSx39uKJFcHyw4cpgnLijjsTkqebcGQHUsA6cy3YS_yUB3CzntdD8y6HhcQKmlxMzRzD4nwL4BteSQcMaR-XLpGaREw2hHgGJknINeWhLkZL_gh-48v2VUcwiNCxp7UQgiSF64JI0NeCwGHIH_Vd7jMybqOogC0j8ilq7zYJup_-EtMrJMdLSVsPYCE">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">22:18</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -282,10 +292,12 @@
 </div>
 </article>
 <!-- Video Card 6 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Photography" class="w-full h-full object-cover" data-alt="stunning landscape of a mist-covered mountain range at sunrise with soft pastel colors in the sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaWk8xf1B1qypjWZnHxuNkP0TsZV7hKIDD7nXf8xMpOuqnivhsGBqqmVhaWho55rC1sItK0VWKy_WT2-KQxW8FyZBnw9gWMHfGgXCvz3016FyLm_mORUHToN9vxwrLrgh854QhtfRYTjyqOF9wtO5aFwMaH7Pj-PogxDTI1vkmrrN8VpuLkjor-q3pbD6jMzZ_l8W6ZXLmjJe6CHCPV1zUhAkpVMUz57kwui6JD5zbnNRuLUG5QDe32SqJOL05RtQfwzhI0u6OoGI"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">10:05</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuCaWk8xf1B1qypjWZnHxuNkP0TsZV7hKIDD7nXf8xMpOuqnivhsGBqqmVhaWho55rC1sItK0VWKy_WT2-KQxW8FyZBnw9gWMHfGgXCvz3016FyLm_mORUHToN9vxwrLrgh854QhtfRYTjyqOF9wtO5aFwMaH7Pj-PogxDTI1vkmrrN8VpuLkjor-q3pbD6jMzZ_l8W6ZXLmjJe6CHCPV1zUhAkpVMUz57kwui6JD5zbnNRuLUG5QDe32SqJOL05RtQfwzhI0u6OoGI">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">10:05</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -299,10 +311,12 @@
 </div>
 </article>
 <!-- Video Card 7 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Cooking" class="w-full h-full object-cover" data-alt="artistic close-up of a perfectly plated gourmet pasta dish with fresh herbs and steam rising" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrhKtAM26zSW1OJd6Z5GXpwKSv8gYPVf-XFaUc1dZz6UZ70_3CEDz4nSZ1kZHZSwMb0tKNkEjxF8Fg1uBGwz10z75Afcbe2p96jPnWAn2HW4eFgePqzIEqPMjl_rsjYvl747zECFYQ_OJL58wOEEAeb8ztgmA4OhZH7ZPxUsVgecLOIJGtk2gy5f7T3TU4IwkL1ifKhaq5_qXwVI59D3zRiwt4-AWAKMGQO56EpXUwsIBMZ_Y3C925hVibMfrloAlpNsdn9bc9kM"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">08:30</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrhKtAM26zSW1OJd6Z5GXpwKSv8gYPVf-XFaUc1dZz6UZ70_3CEDz4nSZ1kZHZSwMb0tKNkEjxF8Fg1uBGwz10z75Afcbe2p96jPnWAn2HW4eFgePqzIEqPMjl_rsjYvl747zECFYQ_OJL58wOEEAeb8ztgmA4OhZH7ZPxUsVgecLOIJGtk2gy5f7T3TU4IwkL1ifKhaq5_qXwVI59D3zRiwt4-AWAKMGQO56EpXUwsIBMZ_Y3C925hVibMfrloAlpNsdn9bc9kM">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">08:30</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -316,10 +330,12 @@
 </div>
 </article>
 <!-- Video Card 8 -->
-<article class="group cursor-pointer">
+<article class="group cursor-pointer" data-video-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4">
 <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-<img alt="Workspace" class="w-full h-full object-cover" data-alt="close-up of a laptop screen with creative software open, surrounded by design tools and a coffee cup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChvXyeSDbpBoYdkH18tPxgZtncCaDBZNPog0ErOzPSJaR44kgVyQ_UCyjwxCvdU903TOCC1j0gqn3B1xRKtT1NXG1dO4n2g9uucSAc-OxW7rZsUTVVNJYHH4uicvwVvdvueIah-UDoYNpCfhUrr5rXU9c92X3tGLolUboLsTZyn0Hjj2W6JXbV0hnpzhFuISKBq5py6LZ6JTUpV0C_4hVZ30YmPDEOPU1Zv-fG7snHc9HS-SLTzoenbSkg_JQqWczfiZmpuL_PwuE"/>
-<div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">31:20</div>
+<video class="video-preview w-full h-full object-cover" muted loop playsinline poster="https://lh3.googleusercontent.com/aida-public/AB6AXuChvXyeSDbpBoYdkH18tPxgZtncCaDBZNPog0ErOzPSJaR44kgVyQ_UCyjwxCvdU903TOCC1j0gqn3B1xRKtT1NXG1dO4n2g9uucSAc-OxW7rZsUTVVNJYHH4uicvwVvdvueIah-UDoYNpCfhUrr5rXU9c92X3tGLolUboLsTZyn0Hjj2W6JXbV0hnpzhFuISKBq5py6LZ6JTUpV0C_4hVZ30YmPDEOPU1Zv-fG7snHc9HS-SLTzoenbSkg_JQqWczfiZmpuL_PwuE">
+<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
+</video>
+<div class="absolute bottom-2 right-2 z-10 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">31:20</div>
 </div>
 <div class="flex gap-3">
 <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-slate-100">
@@ -354,4 +370,21 @@
 <span class="text-[10px] font-medium font-['Inter']">Library</span>
 </a>
 </nav>
-</body></html>
+
+<!-- Full Screen Video Modal -->
+<div id="video-modal" class="hidden fixed inset-0 z-[100] bg-black/95 items-center justify-center backdrop-blur-sm">
+    <div class="absolute top-4 right-4 z-[110]">
+        <button id="close-modal" class="p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all active:scale-95 duration-200">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+    </div>
+    <div class="w-full max-w-6xl w-[90vw] aspect-video relative rounded-2xl overflow-hidden shadow-2xl">
+        <video id="modal-video-player" class="w-full h-full object-contain bg-black" controls>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
