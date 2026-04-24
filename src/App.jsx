@@ -96,9 +96,29 @@ const mapVideo = (v, index) => ({
 const PAGE_SIZE = 8;
 
 function getVideoPool(category) {
+  if (category === 'Home') return HOME_VIDEOS;
   if (category === 'Education') return EDU_VIDEOS;
   if (category === 'Informative') return INFO_VIDEOS;
-  return HOME_VIDEOS; // Home + everything else shows mixed
+
+  const categoryLower = category.toLowerCase();
+  
+  const filtered = HOME_VIDEOS.filter(video => {
+    const text = (video.title + ' ' + video.channel).toLowerCase();
+    
+    // Exact substring match
+    if (text.includes(categoryLower)) return true;
+    
+    // Specific overrides for categories to make them "work" with existing data
+    if (category === 'Gaming' && text.includes('game')) return true;
+    if (category === 'Design Systems' && (text.includes('design') || text.includes('ui') || text.includes('ux'))) return true;
+    if (category === 'Programming' && (text.includes('code') || text.includes('react') || text.includes('javascript') || text.includes('python') || text.includes('c#') || text.includes('tutorial'))) return true;
+    if (category === 'Productivity' && (text.includes('learn') || text.includes('study') || text.includes('fast') || text.includes('automation'))) return true;
+    if (category === 'Photography' && (text.includes('photo') || text.includes('camera'))) return true;
+    
+    return false;
+  });
+
+  return filtered;
 }
 
 // ---------------------------------------------------------------------------
@@ -143,6 +163,11 @@ function App() {
     setIsLoading(true);
     setTimeout(() => {
       const pool = getVideoPool(activeCategory);
+      if (pool.length === 0) {
+        setHasMore(false);
+        setIsLoading(false);
+        return;
+      }
       const start = page * PAGE_SIZE;
       const chunk = pool.slice(start % pool.length);
       // cycle the pool so scroll is truly infinite

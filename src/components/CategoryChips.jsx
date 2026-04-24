@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 const categories = [
-  "Home", "Informative", "Education", "Design Systems", "Gaming", "Music", "Live", 
-  "Programming", "Photography", "Productivity"
+  "Home", "Informative", "Education", "Design Systems", "Gaming", 
+  "Programming", "Productivity"
 ];
 
 const CategoryChips = ({ activeCategory, onSelectCategory }) => {
