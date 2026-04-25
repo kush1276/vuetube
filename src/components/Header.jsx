@@ -16,7 +16,16 @@ const Header = ({ userName, onSearch }) => {
         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all active:scale-95 duration-200 lg:hidden">
           <span className="material-symbols-outlined dark:text-white">menu</span>
         </button>
-        <div className="text-xl font-black tracking-tighter text-slate-900 dark:text-white pointer-events-none">VueTube</div>
+        <div className="flex items-center gap-2 pointer-events-none select-none">
+          <img
+            src="/logo.png"
+            alt="VueTube logo"
+            className="w-8 h-8 object-contain rounded-md"
+          />
+          <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">
+            VueTube
+          </span>
+        </div>
       </div>
 
       <div className="hidden md:flex flex-1 max-w-2xl px-12">

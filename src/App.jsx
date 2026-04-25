@@ -5,6 +5,7 @@ import CategoryChips from './components/CategoryChips';
 import VideoCard from './components/VideoCard';
 import SettingsModal from './components/SettingsModal';
 import HelpModal from './components/HelpModal';
+import SubscriptionsView from './components/SubscriptionsView';
 import './App.css';
 
 // ── Verified YouTube video pools ──────────────────────────────────────────
@@ -96,6 +97,36 @@ const mapVideo = (v, index) => ({
 
 const PAGE_SIZE = 8;
 
+// ── Subscriptions ─────────────────────────────────────────────────────────────
+const YOUTUBE_API_KEY_2 = import.meta.env.VITE_YOUTUBE_API_KEY_2;
+
+const SUBSCRIBED_CHANNELS = [
+  'NewtonSchoolOfTechnology-ADYPU',
+  'imassasin1361',
+  'AalekhFx',
+  'Br7k07',
+];
+
+// Convert ISO 8601 duration (e.g. PT1H2M3S) → "1:02:03" / "2:30" / "0:45"
+const parseISO8601Duration = (iso) => {
+  if (!iso) return '';
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return '';
+  const h = parseInt(m[1] || '0');
+  const min = parseInt(m[2] || '0');
+  const s = parseInt(m[3] || '0');
+  if (h > 0) return `${h}:${String(min).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  return `${min}:${String(s).padStart(2, '0')}`;
+};
+
+// Total seconds from ISO 8601 duration — used to detect Shorts (≤ 60 s)
+const parseDurationToSeconds = (iso) => {
+  if (!iso) return Infinity;
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return Infinity;
+  return (parseInt(m[1] || '0') * 3600) + (parseInt(m[2] || '0') * 60) + parseInt(m[3] || '0');
+};
+
 function getVideoPool(category) {
   if (category === 'Home') return HOME_VIDEOS;
   if (category === 'Education') return EDU_VIDEOS;
@@ -141,6 +172,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [subscriptionChannels, setSubscriptionChannels] = useState([]);
   const loaderRef = useRef(null);
 
   // YouTube API Key (Accessed via environment variable for security)
@@ -157,11 +189,119 @@ function App() {
     }
   }, [isDarkMode]);
 
-  // Reset when category changes
+  // Reset when category changes; fetch subscriptions when needed
   useEffect(() => {
     setVideos([]);
     setPage(0);
-    setHasMore(true);
+
+    if (activeCategory === 'Subscriptions') {
+      setHasMore(false);
+
+      const fetchSubs = async () => {
+        setIsLoading(true);
+        try {
+          // 1️⃣ Resolve channel handles → IDs + avatars
+          const channelData = await Promise.all(
+            SUBSCRIBED_CHANNELS.map(async (handle) => {
+              const res = await fetch(
+                `https://www.googleapis.com/youtube/v3/channels?part=id,snippet&forHandle=${handle}&key=${YOUTUBE_API_KEY_2}`
+              );
+              const data = await res.json();
+              const item = data.items?.[0];
+              if (!item) return null;
+              return {
+                id: item.id,
+                name: item.snippet.title,
+                avatar:
+                  item.snippet.thumbnails?.default?.url ||
+                  item.snippet.thumbnails?.medium?.url ||
+                  '',
+              };
+            })
+          );
+          const validChannels = channelData.filter(Boolean);
+          // Store channel info so SubscriptionsView can show avatar row
+          setSubscriptionChannels(validChannels);
+
+          // 2️⃣ Fetch latest 15 videos per channel (includes Shorts)
+          const videoArrays = await Promise.all(
+            validChannels.map(async (ch) => {
+              const res = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${ch.id}&maxResults=15&order=date&type=video&key=${YOUTUBE_API_KEY_2}`
+              );
+              const data = await res.json();
+              return (data.items || []).map((item) => ({
+                id: item.id.videoId,
+                title: item.snippet.title,
+                channelName: item.snippet.channelTitle,
+                views: '',
+                timestamp: new Date(item.snippet.publishedAt).toLocaleDateString(
+                  'en-US',
+                  { year: 'numeric', month: 'short', day: 'numeric' }
+                ),
+                duration: '',
+                poster:
+                  item.snippet.thumbnails?.high?.url ||
+                  item.snippet.thumbnails?.medium?.url ||
+                  item.snippet.thumbnails?.default?.url,
+                ytId: item.id.videoId,
+                channelAvatar: ch.avatar,
+                publishedAt: item.snippet.publishedAt,
+              }));
+            })
+          );
+
+          const allVideos = videoArrays.flat();
+
+          // 3️⃣ Enrich with duration + view count (videos.list, batch of 50)
+          const videoIds = allVideos.map((v) => v.ytId);
+          const batches = [];
+          for (let i = 0; i < videoIds.length; i += 50) {
+            batches.push(videoIds.slice(i, i + 50));
+          }
+          const detailsMap = {};
+          await Promise.all(
+            batches.map(async (batch) => {
+              const res = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics&id=${batch.join(',')}&key=${YOUTUBE_API_KEY_2}`
+              );
+              const data = await res.json();
+              (data.items || []).forEach((item) => {
+                const rawViews = item.statistics?.viewCount;
+                const iso = item.contentDetails?.duration;
+                detailsMap[item.id] = {
+                  duration: parseISO8601Duration(iso),
+                  durationSeconds: parseDurationToSeconds(iso),
+                  views: rawViews
+                    ? `${Number(rawViews).toLocaleString()} views`
+                    : '',
+                };
+              });
+            })
+          );
+
+          // 4️⃣ Merge details + sort newest → oldest
+          const enriched = allVideos
+            .map((v) => ({
+              ...v,
+              duration: detailsMap[v.ytId]?.duration || '',
+              durationSeconds: detailsMap[v.ytId]?.durationSeconds ?? Infinity,
+              views: detailsMap[v.ytId]?.views || '',
+            }))
+            .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+          setVideos(enriched);
+        } catch (err) {
+          console.error('Subscription fetch error:', err);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchSubs();
+    } else {
+      setHasMore(true);
+    }
   }, [activeCategory]);
 
   // Load next page
@@ -268,6 +408,8 @@ function App() {
         <Sidebar 
           onOpenSettings={() => setIsSettingsOpen(true)} 
           onOpenHelp={() => setIsHelpOpen(true)}
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
         />
 
         <main className="flex-1 ml-0 md:ml-64 p-6 lg:p-8 overflow-x-hidden">
@@ -276,15 +418,23 @@ function App() {
             onSelectCategory={setActiveCategory}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 mt-2">
-            {videos.map(video => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                onSelect={setSelectedVideo}
-              />
-            ))}
-          </div>
+          {activeCategory === 'Subscriptions' ? (
+            <SubscriptionsView
+              channels={subscriptionChannels}
+              videos={videos}
+              onSelect={setSelectedVideo}
+            />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 mt-2">
+              {videos.map(video => (
+                <VideoCard
+                  key={video.id}
+                  video={video}
+                  onSelect={setSelectedVideo}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Sentinel for IntersectionObserver */}
           <div ref={loaderRef} className="flex justify-center items-center py-8 w-full">

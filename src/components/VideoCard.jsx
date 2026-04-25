@@ -38,10 +38,12 @@ const VideoCard = ({ video, onSelect }) => {
             </svg>
           </div>
         </div>
-        {/* Duration badge */}
-        <div className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
-          {video.duration}
-        </div>
+        {/* Duration badge — only shown when duration is known */}
+        {video.duration && (
+          <div className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+            {video.duration}
+          </div>
+        )}
       </div>
 
       {/* Info row */}
