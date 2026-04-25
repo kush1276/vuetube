@@ -101,10 +101,10 @@ const PAGE_SIZE = 8;
 const YOUTUBE_API_KEY_2 = import.meta.env.VITE_YOUTUBE_API_KEY_2;
 
 const SUBSCRIBED_CHANNELS = [
-  'NewtonSchoolOfTechnology-ADYPU',
-  'imassasin1361',
-  'AalekhFx',
-  'Br7k07',
+  '@NewtonSchoolOfTechnology-ADYPU',
+  '@imassasin1361',
+  '@AalekhFx',
+  '@Br7k07',
 ];
 
 // Convert ISO 8601 duration (e.g. PT1H2M3S) → "1:02:03" / "2:30" / "0:45"
