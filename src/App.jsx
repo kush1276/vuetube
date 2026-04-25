@@ -163,6 +163,8 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+  const [userHandle, setUserHandle] = useState(localStorage.getItem('userHandle') || '');
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail') || '');
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isDataSaver, setIsDataSaver] = useState(localStorage.getItem('dataSaver') === 'true');
   const [activeCategory, setActiveCategory] = useState('Home');
@@ -403,7 +405,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300 font-body-md text-slate-900 dark:text-slate-100">
-      <Header userName={userName} onSearch={handleSearch} />
+      <Header 
+        userName={userName} 
+        userHandle={userHandle}
+        userEmail={userEmail}
+        onSearch={handleSearch} 
+      />
       <div className="flex pt-14">
         <Sidebar 
           onOpenSettings={() => setIsSettingsOpen(true)} 
@@ -499,6 +506,10 @@ function App() {
         toggleDataSaver={toggleDataSaver}
         userName={userName}
         setUserName={setUserName}
+        userHandle={userHandle}
+        setUserHandle={setUserHandle}
+        userEmail={userEmail}
+        setUserEmail={setUserEmail}
       />
 
       <HelpModal 

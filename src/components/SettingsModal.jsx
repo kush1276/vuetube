@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
-const SettingsModal = ({ isOpen, onClose, isDarkMode, toggleDarkMode, isDataSaver, toggleDataSaver, userName, setUserName }) => {
-  const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail') || '');
-
+const SettingsModal = ({ 
+  isOpen, 
+  onClose, 
+  isDarkMode, 
+  toggleDarkMode, 
+  isDataSaver, 
+  toggleDataSaver, 
+  userName, 
+  setUserName,
+  userHandle,
+  setUserHandle,
+  userEmail,
+  setUserEmail
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem('userName', userName);
+    localStorage.setItem('userHandle', userHandle);
     localStorage.setItem('userEmail', userEmail);
     alert('Profile updated successfully!');
     onClose();
@@ -84,6 +96,19 @@ const SettingsModal = ({ isOpen, onClose, isDarkMode, toggleDarkMode, isDataSave
                     className="w-full px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" 
                     placeholder="Your name" 
                   />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">CUSTOMIZED HANDLE</label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">@</span>
+                    <input 
+                      type="text" 
+                      value={userHandle}
+                      onChange={(e) => setUserHandle(e.target.value.replace(/\s+/g, '').toLowerCase())}
+                      className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none" 
+                      placeholder="username" 
+                    />
+                  </div>
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">EMAIL ADDRESS</label>

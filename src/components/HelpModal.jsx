@@ -18,7 +18,7 @@ const HelpModal = ({ isOpen, onClose }) => {
     },
     {
       question: "How can I contact support?",
-      answer: "Since this is a demo project, you can reach out via the GitHub repository or contact the developer directly through the 'Newton School of Technology' platforms."
+      answer: "Since this is a demo project, you can reach out via the GitHub repository or contact the developer directly through the email."
     },
     {
       question: "What is Data Saver mode?",
@@ -28,7 +28,7 @@ const HelpModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 flex items-center justify-center backdrop-blur-md" onClick={onClose}>
-      <div 
+      <div
         className="bg-white dark:bg-slate-900 w-full max-w-2xl mx-4 rounded-3xl overflow-hidden shadow-2xl transform transition-all border border-slate-100 dark:border-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
@@ -41,7 +41,7 @@ const HelpModal = ({ isOpen, onClose }) => {
             <span className="material-symbols-outlined text-slate-500">close</span>
           </button>
         </div>
-        
+
         <div className="p-8 space-y-6 overflow-y-auto max-h-[70vh]">
           {faqs.map((faq, index) => (
             <div key={index} className="space-y-2 group">
