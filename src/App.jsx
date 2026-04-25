@@ -413,35 +413,51 @@ function App() {
         />
 
         <main className="flex-1 ml-0 md:ml-64 p-6 lg:p-8 overflow-x-hidden">
-          <CategoryChips
-            activeCategory={activeCategory}
-            onSelectCategory={setActiveCategory}
-          />
-
-          {activeCategory === 'Subscriptions' ? (
-            <SubscriptionsView
-              channels={subscriptionChannels}
-              videos={videos}
-              onSelect={setSelectedVideo}
-            />
+          {activeCategory === 'Your Videos' ? (
+            <div className="flex flex-col items-center justify-center h-[60vh] text-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-200">
+                You can't upload videos right now!
+              </h2>
+            </div>
+          ) : activeCategory === 'Watch Later' ? (
+            <div className="flex flex-col items-center justify-center h-[60vh] text-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-200">
+                This feature isn't available right now, We will add it in the near future!.
+              </h2>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 mt-2">
-              {videos.map(video => (
-                <VideoCard
-                  key={video.id}
-                  video={video}
+            <>
+              <CategoryChips
+                activeCategory={activeCategory}
+                onSelectCategory={setActiveCategory}
+              />
+
+              {activeCategory === 'Subscriptions' ? (
+                <SubscriptionsView
+                  channels={subscriptionChannels}
+                  videos={videos}
                   onSelect={setSelectedVideo}
                 />
-              ))}
-            </div>
-          )}
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 mt-2">
+                  {videos.map(video => (
+                    <VideoCard
+                      key={video.id}
+                      video={video}
+                      onSelect={setSelectedVideo}
+                    />
+                  ))}
+                </div>
+              )}
 
-          {/* Sentinel for IntersectionObserver */}
-          <div ref={loaderRef} className="flex justify-center items-center py-8 w-full">
-            {isLoading && (
-              <div className="w-8 h-8 border-4 border-slate-200 dark:border-slate-800 border-t-red-500 rounded-full animate-spin" />
-            )}
-          </div>
+              {/* Sentinel for IntersectionObserver */}
+              <div ref={loaderRef} className="flex justify-center items-center py-8 w-full">
+                {isLoading && (
+                  <div className="w-8 h-8 border-4 border-slate-200 dark:border-slate-800 border-t-red-500 rounded-full animate-spin" />
+                )}
+              </div>
+            </>
+          )}
         </main>
       </div>
 

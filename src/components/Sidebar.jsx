@@ -25,32 +25,26 @@ const Sidebar = ({ onOpenSettings, onOpenHelp, activeCategory, onSelectCategory 
         {/* Navigation Section */}
         <div className="mb-2">
           {navItem('Home', 'home', 'Home')}
-          <a className="flex items-center gap-4 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer active:translate-x-1" href="#">
-            <span className="material-symbols-outlined">trending_up</span>
-            <span className="text-sm">Trending</span>
-          </a>
           {navItem('Subscriptions', 'subscriptions', 'Subscriptions')}
-          <a className="flex items-center gap-4 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer active:translate-x-1" href="#">
-            <span className="material-symbols-outlined">video_library</span>
-            <span className="text-sm">Library</span>
-          </a>
         </div>
 
         <div className="px-6 py-4 border-t border-slate-50 dark:border-slate-800/50">
           <h3 className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Creator Dashboard</h3>
           <div className="space-y-1">
-            <a className="flex items-center gap-4 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-500 transition-colors" href="#">
-              <span className="material-symbols-outlined text-xl">history</span>
-              <span className="text-sm font-medium">History</span>
-            </a>
-            <a className="flex items-center gap-4 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-500 transition-colors" href="#">
+            <button 
+              className="w-full flex items-center gap-4 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-500 transition-colors cursor-pointer text-left" 
+              onClick={() => onSelectCategory?.('Your Videos')}
+            >
               <span className="material-symbols-outlined text-xl">smart_display</span>
               <span className="text-sm font-medium">Your Videos</span>
-            </a>
-            <a className="flex items-center gap-4 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-500 transition-colors" href="#">
+            </button>
+            <button 
+              className="w-full flex items-center gap-4 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-500 transition-colors cursor-pointer text-left" 
+              onClick={() => onSelectCategory?.('Watch Later')}
+            >
               <span className="material-symbols-outlined text-xl">schedule</span>
               <span className="text-sm font-medium">Watch Later</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
